@@ -29,7 +29,7 @@ int main(void)
 						{
 						break;
 						}
-						else
+					else
 						{
 						putchar(',');
 						putchar(' ');
