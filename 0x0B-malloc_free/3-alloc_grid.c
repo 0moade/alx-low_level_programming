@@ -3,23 +3,36 @@
 #include <stdlib.h>
 
 /**
- * array_range - function that creates an array of integers
- * @min: the address of memory to print
- * @max: the size of the memory to print
+ * alloc_grid - function to return a pointer of a 2d array
+ * @width: width of the grid
+ * @height: height of the grid
  *
- * Return: Nothing.
+ * Return: NULL for failure or 0/ neg height/ width
  */
-int *array_range(int min, int max)
+int **alloc_grid(int width, int height)
 {
-	int a;
-	int *p;
+	int **matrix;
+	int a, b;
 
-	if (min > max)
+	if (width < 1)
 		return (NULL);
-	p = malloc(sizeof(int) * (max - min + 1));
-	if (p == 0)
+	if (height < 1)
 		return (NULL);
-	for (a = 0; min <= max; min++, a++)
-		p[a] = min;
-	return (p);
+	matrix = malloc(height * sizeof(int*));
+	if (matrix == 0)
+		return (NULL);
+	for (a = 0; a < height; a++)
+	{
+		matrix[a] = malloc(width * sizeof(int));
+		if (matrix[a] == 0)
+		{
+			for (b = 0; b < a; b++)
+				free(matrix[b]);
+			free(matrix);
+			return (NULL);
+		}
+		for (b = 0; b < width; b++)
+			matrix[a][b] = 0;
+	}
+	return (matrix);
 }
